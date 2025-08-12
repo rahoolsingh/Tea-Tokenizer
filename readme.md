@@ -1,22 +1,25 @@
-# Tea Tokenizer
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rahoolsingh/Tea-Tokenizer/refs/heads/main/frontend/public/logo.png" alt="Tea Tokenizer Banner" width="200"/>
+</p>
 
+# Tea Tokenizer
 > A full-stack text tokenizer API with Web Interface & API endpoints access
 
 ---
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/rahoolsingh/Tea-Tokenizer/main/snap1.png" alt="Tea Tokenizer Banner" width="600"/>
+  <img src="https://raw.githubusercontent.com/rahoolsingh/Tea-Tokenizer/refs/heads/main/snap1.png" alt="Tea Tokenizer Banner" width="600"/>
 </p>
 
-## Live Demo
+#### Live Demo
 
-[https://tea-tokenizer.vercel.app/](https://tea-tokenizer.vercel.app/)
+[https://tea-tokenizer.vercel.app](https://tea-tokenizer.vercel.app/)
 
-## GitHub Repository
+#### GitHub Repository
 
 [https://github.com/rahoolsingh/Tea-Tokenizer](https://github.com/rahoolsingh/Tea-Tokenizer)
 
-## API Reference Page
+#### API Reference Page
 
 [https://tea-tokenizer.vercel.app/api-reference](https://tea-tokenizer.vercel.app/api-reference)
 
