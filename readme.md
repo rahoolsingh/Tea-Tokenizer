@@ -1,9 +1,6 @@
-
-```markdown
 # 🍵 Tea Tokenizer
 
 Tea Tokenizer is a simple and efficient tokenizer service with a user-friendly API and a frontend interface to encode and decode text into token IDs.  
-Built using **Express (backend)** and **React + Tailwind CSS (frontend)**.
 
 ---
 
