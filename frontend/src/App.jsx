@@ -11,7 +11,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Tokenizer />} />
                     <Route path="/api-reference" element={<ApiReference />} />
-                    <Route path="/documentation" element={<Documentation />} />
+                    <Route path="/docs" element={<Documentation />} />
                 </Routes>
             </Layout>
         </BrowserRouter>

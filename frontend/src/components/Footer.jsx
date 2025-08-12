@@ -1,17 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faGithub,
-    faTwitter,
     faLinkedin,
     faInstagram,
+    faXTwitter,
+    faMedium,
 } from "@fortawesome/free-brands-svg-icons";
-import {
-    faCaretRight,
-    faCoffee,
-    faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCaretRight, faCoffee } from "@fortawesome/free-solid-svg-icons";
 import chaiSamosa from "../assets/chaiSamosa.png";
 import logo from "../assets/teaTokenizer.png";
+import { Link } from "react-router";
 
 function Footer() {
     return (
@@ -32,28 +30,29 @@ function Footer() {
                     </h3>
                     <ul className="space-y-2 text-gray-700 text-sm mb-6">
                         <li>
-                            <a
-                                href="#"
+                            <Link
+                                to="https://github.com/rahoolsingh/tea-tokenizer"
+                                target="_blank"
                                 className="hover:text-gray-500 transition-colors"
                             >
                                 GitHub Repo
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
-                                href="#"
+                            <Link
+                                to="/docs"
                                 className="hover:text-gray-500 transition-colors"
                             >
-                                Documentation
-                            </a>
+                                Docs
+                            </Link>
                         </li>
                         <li>
-                            <a
-                                href="#"
+                            <Link
+                                to="/api-reference"
                                 className="hover:text-gray-500 transition-colors"
                             >
                                 API Reference
-                            </a>
+                            </Link>
                         </li>
                     </ul>
 
@@ -61,36 +60,41 @@ function Footer() {
                         Connect With Me
                     </h3>
                     <div className="flex justify-center md:justify-start space-x-4 text-gray-700 text-xl">
-                        <a
-                            href="#"
+                        <Link
+                            to="https://github.com/rahoolsingh"
+                            target="_blank"
                             className="hover:text-gray-500 transition-colors"
                         >
                             <FontAwesomeIcon icon={faGithub} />
-                        </a>
-                        <a
-                            href="#"
+                        </Link>
+                        <Link
+                            to="https://twitter.com/cosmonaut_dev"
+                            target="_blank"
                             className="hover:text-gray-500 transition-colors"
                         >
-                            <FontAwesomeIcon icon={faTwitter} />
-                        </a>
-                        <a
-                            href="#"
+                            <FontAwesomeIcon icon={faXTwitter} />
+                        </Link>
+                        <Link
+                            to="https://www.linkedin.com/in/rahoolsingh"
+                            target="_blank"
                             className="hover:text-gray-500 transition-colors"
                         >
                             <FontAwesomeIcon icon={faLinkedin} />
-                        </a>
-                        <a
-                            href="#"
+                        </Link>
+                        <Link
+                            to="https://www.instagram.com/cosmonaut.dev"
+                            target="_blank"
                             className="hover:text-gray-500 transition-colors"
                         >
                             <FontAwesomeIcon icon={faInstagram} />
-                        </a>
-                        <a
-                            href="mailto:veer@example.com"
+                        </Link>
+                        <Link
+                            to="https://medium.com/@rahoolsingh"
+                            target="_blank"
                             className="hover:text-gray-500 transition-colors"
                         >
-                            <FontAwesomeIcon icon={faEnvelope} />
-                        </a>
+                            <FontAwesomeIcon icon={faMedium} />
+                        </Link>
                     </div>
                 </div>
 
@@ -110,7 +114,7 @@ function Footer() {
                             rights reserved.
                         </p>
                         <a
-                            href="https://www.buymeacoffee.com/veerrajpoot"
+                            href="https://payments.cashfree.com/forms/veer"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-orange-600 transition-colors text-orange-700 text-xs mt-4 cursor-pointer"

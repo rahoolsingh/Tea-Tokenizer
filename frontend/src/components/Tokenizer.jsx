@@ -7,6 +7,8 @@ function Tokenizer() {
     const [mode, setMode] = useState("encode"); // "encode" | "decode"
     const [input, setInput] = useState("");
     const [output, setOutput] = useState("");
+    const [encodeStats, setEncodeStats] = useState({});
+    const [decodeStats, setDecodeStats] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -21,6 +23,7 @@ function Tokenizer() {
                     text: input,
                 });
                 setOutput(JSON.stringify(res.data.tokens, null, 2));
+                setEncodeStats(res.data.stats);
             } else {
                 let parsedTokens;
                 try {
@@ -34,6 +37,7 @@ function Tokenizer() {
                     tokens: parsedTokens,
                 });
                 setOutput(res.data.text || res.data.words?.join(" ") || "");
+                setDecodeStats(res.data.stats);
             }
         } catch (err) {
             setError(`${mode === "encode" ? "Encoding" : "Decoding"} failed.`);
@@ -83,7 +87,7 @@ function Tokenizer() {
                     placeholder={
                         mode === "encode"
                             ? "Enter text to encode..."
-                            : 'Enter tokens, e.g. [44040,106894,38480,2103,"<BIN>","1000000000"]'
+                            : 'Enter tokens, e.g. [44040,106894,38480,2103]'
                     }
                 />
             </div>
@@ -116,11 +120,31 @@ function Tokenizer() {
                             ? "Encoded Tokens:"
                             : "Decoded Text:"}
                     </div>
-                    <pre className="bg-gray-800 border border-gray-700 p-3 rounded text-sm text-gray-100 whitespace-pre-wrap">
+                    <textarea className="bg-gray-800 border border-gray-700 p-3 rounded text-sm text-gray-100 whitespace-pre-wrap w-full h-32">
                         {output}
-                    </pre>
+                    </textarea>
                 </div>
             )}
+            {/* Stats */}
+            <div className="mt-4">
+                <div className="text-gray-400">
+                    {mode === "encode" && output && (
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                            <p>Words: {input.split(" ").length}</p>
+                            <p>Input Length: {encodeStats?.originalLength}</p>
+                            <p>Tokens: {encodeStats?.tokenCount}</p>
+                        </div>
+                    )}
+
+                    {mode === "decode" && output && (
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                            <p>Token Count: {decodeStats?.tokenCount}</p>
+                            <p>Output Words: {output.split(" ").length}</p>
+                            <p>Output Length: {decodeStats?.decodedLength}</p>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }
