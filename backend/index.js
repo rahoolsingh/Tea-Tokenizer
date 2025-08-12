@@ -5,12 +5,50 @@ import cors from "cors";
 import dotenv from "dotenv";
 import UnknownWord from "./src/models/unknownWord.model.js";
 import mongoose from "mongoose";
+import RateLimiter from "./src/models/rateLimitterIp.model.js";
 
 dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors({ origin: process.env.CORS_ORIGIN }));
+
+// Rate limiting middleware: allow only 10 requests per minute per IP
+app.use(async (req, res, next) => {
+    const ip = req.ip;
+    const now = Date.now();
+    const windowMs = 60 * 1000; // 1 minute
+
+    let limiter = await RateLimiter.findOne({ ip });
+
+    if (!limiter) {
+        limiter = new RateLimiter({
+            ip,
+            count: 1,
+            windowStart: now,
+        });
+        await limiter.save();
+        return next();
+    }
+
+    if (now - limiter.windowStart > windowMs) {
+        limiter.count = 1;
+        limiter.windowStart = now;
+        await limiter.save();
+        return next();
+    }
+
+    if (limiter.count >= 10) {
+        return res
+            .status(429)
+            .json({ error: "Too many requests. Please try again later." });
+    }
+
+    limiter.count += 1;
+
+    await limiter.save();
+    next();
+});
 
 const englishWords = wordlist["english"];
 
