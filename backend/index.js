@@ -17,7 +17,7 @@ app.use(cors());
 const allowedOrigins = process.env.CORS_ORIGIN.split(",").map((o) => o.trim());
 
 app.use(async (req, res, next) => {
-    const origin = req.get("origin");
+    let origin = req.get("origin");
     const now = Date.now();
     const windowMs = 60 * 1000; // 1 minute
 
@@ -36,9 +36,12 @@ app.use(async (req, res, next) => {
         return next();
     }
 
-    // If no origin header, block or treat as separate origin
+    // If no origin header, treat as separate origin use ip bypass proxy also
     if (!origin) {
-        return res.status(400).json({ error: "Origin header required" });
+        origin = req.headers["x-forwarded-for"] || req.ip || "unknown";
+        console.log(
+            `No origin header, using IP: ${req.ip} HHeader Forwarded: ${req.headers["x-forwarded-for"]}`
+        );
     }
 
     let limiter = await RateLimiter.findOne({ origin });
@@ -53,9 +56,9 @@ app.use(async (req, res, next) => {
         return next();
     }
 
-    if (now - limiter.windowStart > windowMs) {
+    if (now - limiter.lastRequest > windowMs) {
         limiter.count = 1;
-        limiter.windowStart = now;
+        limiter.lastRequest = now;
         await limiter.save();
         return next();
     }
@@ -63,6 +66,8 @@ app.use(async (req, res, next) => {
     if (limiter.count >= 10) {
         return res.status(429).json({
             error: "Too many requests from this origin. Please try again later.",
+            maxLimit: 10,
+            nextReset: new Date(limiter.lastRequest.getTime() + windowMs),
         });
     }
 
