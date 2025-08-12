@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -11,6 +13,16 @@ function Tokenizer() {
     const [decodeStats, setDecodeStats] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [copySuccess, setCopySuccess] = useState("");
+
+    const handleCopy = () => {
+        navigator.clipboard
+            .writeText(output)
+            .then(() => setCopySuccess("Copied!"))
+            .catch(() => setCopySuccess("Failed to copy."));
+        // Clear success message after 2 seconds
+        setTimeout(() => setCopySuccess(""), 2000);
+    };
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -87,7 +99,7 @@ function Tokenizer() {
                     placeholder={
                         mode === "encode"
                             ? "Enter text to encode..."
-                            : 'Enter tokens, e.g. [44040,106894,38480,2103]'
+                            : "Enter tokens, e.g. [44040,106894,38480,2103]"
                     }
                 />
             </div>
@@ -114,22 +126,34 @@ function Tokenizer() {
 
             {/* Output */}
             {output && (
-                <div>
+                <div className="">
                     <div className="font-semibold text-gray-300 mb-1">
                         {mode === "encode"
                             ? "Encoded Tokens:"
                             : "Decoded Text:"}
                     </div>
-                    <textarea className="bg-gray-800 border border-gray-700 p-3 rounded text-sm text-gray-100 whitespace-pre-wrap w-full h-32">
-                        {output}
-                    </textarea>
+                    <div className="relative ">
+                        {/* copy button */}
+                        <div className="absolute right-3 top-2">
+                            <button
+                                className="text-gray-400 hover:text-gray-300 transition"
+                                onClick={handleCopy}
+                            >
+                                {copySuccess}
+                                <FontAwesomeIcon icon={faCopy} />
+                            </button>
+                        </div>
+                        <textarea className="bg-gray-800 border border-gray-700 p-3 rounded text-sm text-gray-100 whitespace-pre-wrap w-full h-32 ">
+                            {output}
+                        </textarea>
+                    </div>
                 </div>
             )}
             {/* Stats */}
             <div className="mt-4">
                 <div className="text-gray-400">
                     {mode === "encode" && output && (
-                        <div className="grid grid-cols-3 gap-2 text-center">
+                        <div className="grid grid-cols-3 gap-2 text-center text-xs">
                             <p>Words: {input.split(" ").length}</p>
                             <p>Input Length: {encodeStats?.originalLength}</p>
                             <p>Tokens: {encodeStats?.tokenCount}</p>
@@ -137,7 +161,7 @@ function Tokenizer() {
                     )}
 
                     {mode === "decode" && output && (
-                        <div className="grid grid-cols-3 gap-2 text-center">
+                        <div className="grid grid-cols-3 gap-2 text-center text-xs">
                             <p>Token Count: {decodeStats?.tokenCount}</p>
                             <p>Output Words: {output.split(" ").length}</p>
                             <p>Output Length: {decodeStats?.decodedLength}</p>
