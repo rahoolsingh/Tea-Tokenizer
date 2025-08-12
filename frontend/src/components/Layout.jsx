@@ -3,9 +3,9 @@ import NavBar from "./NavBar";
 import Footer from "./Footer.jsx";
 function Layout({ children }) {
     return (
-        <div>
+        <div className="h-dvh flex flex-col">
             <NavBar />
-            {children}
+            <section className="m-4 flex-grow">{children}</section>
             <Footer />
         </div>
     );

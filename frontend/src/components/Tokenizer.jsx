@@ -45,25 +45,27 @@ function Tokenizer() {
 
     return (
         <div className="max-w-xl mx-auto mt-10 p-8 bg-gray-900 text-gray-100 rounded-lg shadow-lg">
-            <h1 className="text-2xl font-bold mb-6 text-orange-400">
-                Tokenizer Utility
-            </h1>
+            <div className="md:flex justify-between items-center mb-6">
+                <h1 className="text-2xl font-bold mb-6 text-orange-400">
+                    {mode === "encode" ? "Text Encoder" : "Token Decoder"}
+                </h1>
 
-            {/* Mode Switch */}
-            <div className="mb-4 flex items-center gap-3">
-                <label className="font-semibold text-gray-300">Mode:</label>
-                <select
-                    className="border border-gray-700 bg-gray-800 text-gray-100 rounded p-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    value={mode}
-                    onChange={(e) => {
-                        setMode(e.target.value);
-                        setInput("");
-                        setOutput("");
-                    }}
-                >
-                    <option value="encode">Encode</option>
-                    <option value="decode">Decode</option>
-                </select>
+                <div className="mb-4 flex items-center gap-3">
+                    {/* Mode Switch */}
+                    <label className="font-semibold text-gray-300">Mode:</label>
+                    <select
+                        className="border border-gray-700 bg-gray-800 text-gray-100 rounded p-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        value={mode}
+                        onChange={(e) => {
+                            setMode(e.target.value);
+                            setInput("");
+                            setOutput("");
+                        }}
+                    >
+                        <option value="encode">Encode</option>
+                        <option value="decode">Decode</option>
+                    </select>
+                </div>
             </div>
 
             {/* Input */}
