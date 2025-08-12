@@ -1,192 +1,85 @@
-# 🍵 Tea Tokenizer
+# Tea Tokenizer
 
-Tea Tokenizer is a simple and efficient tokenizer service with a user-friendly API and a frontend interface to encode and decode text into token IDs.  
-
----
-
-## 📌 Live Demo
-- **Frontend:** [Tea Tokenizer Live](https://tea-tokenizer.vercel.app/)
-- **API Reference:** [API Reference Page](https://tea-tokenizer.vercel.app/api-reference)
+> A full-stack text tokenizer API with Web Interface & API endpoints access
 
 ---
 
-## 📂 Repository Structure
-```
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rahoolsingh/Tea-Tokenizer/main/snap1.png" alt="Tea Tokenizer Banner" width="600"/>
+</p>
 
-Tea-Tokenizer/
-│
-├── backend/       # Express.js API server
-├── frontend/      # React.js web interface
-└── README.md      # This file
+## Live Demo
 
-````
+[https://tea-tokenizer.vercel.app/](https://tea-tokenizer.vercel.app/)
 
----
+## GitHub Repository
 
-## 🚀 Features
-- Encode text into token IDs
-- Decode token IDs back into text
-- Display token statistics (length, token count, unknown words)
-- Clean UI with **Tailwind CSS** and **Font Awesome**
-- Fully documented **API Reference** page
+[https://github.com/rahoolsingh/Tea-Tokenizer](https://github.com/rahoolsingh/Tea-Tokenizer)
+
+## API Reference Page
+
+[https://tea-tokenizer.vercel.app/api-reference](https://tea-tokenizer.vercel.app/api-reference)
 
 ---
 
-## 🛠 Tech Stack
-**Backend**
-- Node.js
-- Express.js
+## Project Structure
 
-**Frontend**
-- React.js
-- Tailwind CSS
-- Axios
+This repository contains two main folders:
+
+-   `backend/` — Express API server for tokenization.
+-   `frontend/` — React app with UI & API reference.
 
 ---
 
-## 📦 Installation & Setup
+## Getting Started
 
-### 1️⃣ Clone the repository
+Follow these steps to run the project locally:
+
+### 1. Clone the repository
+
 ```bash
 git clone https://github.com/rahoolsingh/Tea-Tokenizer.git
-cd Tea-Tokenizer
-````
-
----
-
-### 2️⃣ Backend Setup (Express)
-
-```bash
-cd backend
-npm install
 ```
 
-#### Create `.env` file (if needed for configs)
+### 2. Setup Backend
 
-Example:
+```bash
+cd Tea-Tokenizer/backend
+npm install
+npm run dev
+```
+
+Create a `.env` file inside the `backend` folder with the following variables:
 
 ```env
+CORS_ORIGIN="http://localhost:5173, http://localhost:5174"
+MONGODB_URI=<your_mongodb_connection_string>
 PORT=3000
 ```
 
-#### Run backend server
+### 3. Setup Frontend
 
 ```bash
-npm start
-```
-
-Backend will run on:
-
-```
-http://localhost:3000
-```
-
----
-
-### 3️⃣ Frontend Setup (React)
-
-Open a new terminal in project root:
-
-```bash
-cd frontend
+cd ../frontend
 npm install
+npm run dev
 ```
 
-#### Configure backend API URL
+Create a `.env` file inside the `frontend` folder with the following:
 
-In `frontend/src/config.js`:
-
-```javascript
-export const API_BASE_URL = "http://localhost:3000";
+```env
+VITE_API_BASE_URL=http://localhost:3000
 ```
 
-#### Run frontend
-
-```bash
-npm start
-```
-
-Frontend will run on:
-
-```
-http://localhost:5173
-```
-
-(or whichever port Vite/CRA chooses)
+By default, the frontend runs on `localhost:5173` and proxies API requests to the backend server.
 
 ---
 
-## 🌐 Deployment
+## Configuration
 
-* **Backend**: Can be deployed to **Render**, **Railway**, or any Node hosting service.
-* **Frontend**: Deploy easily to **Vercel** or **Netlify**.
-* Update API URLs in the frontend config when deploying.
+Use the environment variables in the `.env` files to customize:
 
----
-
-## 📖 API Reference
-
-### **Encode**
-
-**POST** `/encode`
-Encodes text into tokens.
-
-Example Request:
-
-```bash
-curl -X POST https://tea-tokenizer.onrender.com/encode \
-  -H "Content-Type: application/json" \
-  -d '{ "text": "Grab your tea" }'
-```
-
-Example Response:
-
-```json
-{
-  "tokens": [41254, 4, 107447, 4, 95066],
-  "stats": {
-    "originalLength": 13,
-    "tokenCount": 5,
-    "unknownWordsCount": 2
-  }
-}
-```
-
----
-
-### **Decode**
-
-**POST** `/decode`
-Decodes tokens into text.
-
-Example Request:
-
-```bash
-curl -X POST https://tea-tokenizer.onrender.com/decode \
-  -H "Content-Type: application/json" \
-  -d '{ "tokens": [41254, 4, 107447, 4, 95066] }'
-```
-
-Example Response:
-
-```json
-{
-  "text": "Grab your tea"
-}
-```
-
----
-
-## 🧑‍💻 Development Notes
-
-* Frontend & backend can be run simultaneously using two terminals.
-* Use **CORS** in backend during development.
-* Make sure backend port matches frontend API config.
-
----
-
-
-
-**Made with ❤️ for tea lovers and developers.**
-
-
+-   `MONGODB_URI`: MongoDB connection string for backend.
+-   `CORS_ORIGIN`: Allowed origins for API requests (comma separated).
+-   `PORT`: Backend server port (default is 3000).
+-   `VITE_API_BASE_URL`: Frontend base URL for API requests (usually backend URL).

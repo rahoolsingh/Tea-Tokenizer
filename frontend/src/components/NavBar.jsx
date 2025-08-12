@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/teaTokenizer.png";
-import { faGithub, faReadme } from "@fortawesome/free-brands-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
     faCodeBranch,
     faBars,
@@ -25,7 +25,7 @@ function NavBar() {
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden md:flex gap-x-4">
+                <ul className="hidden md:flex gap-x-6">
                     <li>
                         <Link
                             to="https://github.com/rahoolsingh/Tea-Tokenizer"
@@ -34,29 +34,17 @@ function NavBar() {
                         >
                             <FontAwesomeIcon icon={faGithub} />
                             Source Code{" "}
-                            <FontAwesomeIcon
-                                icon={faExternalLinkAlt}
-                                className="text-[0.6em] mb-auto -ml-1 group-hover:text-amber-700"
-                            />
                         </Link>
                     </li>
+
                     <li>
-                        <a
-                            href="#"
-                            className="text-gray-800 hover:text-gray-600 flex items-center gap-2"
-                        >
-                            <FontAwesomeIcon icon={faReadme} />
-                            Documentation
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
+                        <Link
+                            to="/api-reference"
                             className="text-gray-800 hover:text-gray-600 flex items-center gap-2"
                         >
                             <FontAwesomeIcon icon={faCodeBranch} />
                             API Reference
-                        </a>
+                        </Link>
                     </li>
                 </ul>
 
@@ -77,31 +65,22 @@ function NavBar() {
                 <div className="absolute top-16 left-0 w-full bg-[#ffeeda] shadow-md md:hidden">
                     <ul className="flex flex-col items-center py-4 gap-y-4">
                         <li>
-                            <a
-                                href="#"
+                            <Link
+                                to="https://github.com/rahoolsingh/Tea-Tokenizer"
                                 className="text-gray-800 hover:text-gray-600 flex items-center gap-2"
                             >
                                 <FontAwesomeIcon icon={faGithub} />
                                 GitHub
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
-                                href="#"
-                                className="text-gray-800 hover:text-gray-600 flex items-center gap-2"
-                            >
-                                <FontAwesomeIcon icon={faReadme} />
-                                Documentation
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
+                            <Link
+                                to="/documentation"
                                 className="text-gray-800 hover:text-gray-600 flex items-center gap-2"
                             >
                                 <FontAwesomeIcon icon={faCodeBranch} />
                                 API Reference
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
