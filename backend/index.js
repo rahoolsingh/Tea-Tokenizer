@@ -11,44 +11,65 @@ dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors({ origin: process.env.CORS_ORIGIN }));
 
-// Rate limiting middleware: allow only 10 requests per minute per IP
-// app.use(async (req, res, next) => {
-//     const ip = req.ip;
-//     const now = Date.now();
-//     const windowMs = 60 * 1000; // 1 minute
+app.use(cors());
 
-//     let limiter = await RateLimiter.findOne({ ip });
+const allowedOrigins = process.env.CORS_ORIGIN.split(",").map((o) => o.trim());
 
-//     if (!limiter) {
-//         limiter = new RateLimiter({
-//             ip,
-//             count: 1,
-//             windowStart: now,
-//         });
-//         await limiter.save();
-//         return next();
-//     }
+app.use(async (req, res, next) => {
+    const origin = req.get("origin");
+    const now = Date.now();
+    const windowMs = 60 * 1000; // 1 minute
 
-//     if (now - limiter.windowStart > windowMs) {
-//         limiter.count = 1;
-//         limiter.windowStart = now;
-//         await limiter.save();
-//         return next();
-//     }
+    console.log(
+        `Request from origin: ${origin} at ${new Date(now).toISOString()}`
+    );
+    // is origin allowed for unlimited requests?
+    console.log(
+        `Is origin allowed for unlimited requests? ${allowedOrigins.includes(
+            origin
+        )} : ${allowedOrigins}`
+    );
 
-//     if (limiter.count >= 10) {
-//         return res
-//             .status(429)
-//             .json({ error: "Too many requests. Please try again later." });
-//     }
+    // Allow unlimited requests for whitelisted origins
+    if (origin && allowedOrigins.includes(origin)) {
+        return next();
+    }
 
-//     limiter.count += 1;
+    // If no origin header, block or treat as separate origin
+    if (!origin) {
+        return res.status(400).json({ error: "Origin header required" });
+    }
 
-//     await limiter.save();
-//     next();
-// });
+    let limiter = await RateLimiter.findOne({ origin });
+
+    if (!limiter) {
+        limiter = new RateLimiter({
+            origin,
+            count: 1,
+            windowStart: now,
+        });
+        await limiter.save();
+        return next();
+    }
+
+    if (now - limiter.windowStart > windowMs) {
+        limiter.count = 1;
+        limiter.windowStart = now;
+        await limiter.save();
+        return next();
+    }
+
+    if (limiter.count >= 10) {
+        return res.status(429).json({
+            error: "Too many requests from this origin. Please try again later.",
+        });
+    }
+
+    limiter.count += 1;
+    await limiter.save();
+    next();
+});
 
 const englishWords = wordlist["english"];
 
