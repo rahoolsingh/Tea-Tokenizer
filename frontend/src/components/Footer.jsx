@@ -107,7 +107,7 @@ function Footer() {
                         />
 
                         <p className="text-gray-700 text-sm mt-2">
-                            Built with ❤️ using React & Tailwind CSS.
+                            Built with ❤️ and 20 cups of chai.
                         </p>
                         <p className="text-gray-600 text-xs mt-1">
                             © {new Date().getFullYear()} Veer Rajpoot. All
