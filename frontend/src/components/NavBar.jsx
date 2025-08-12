@@ -75,7 +75,7 @@ function NavBar() {
                         </li>
                         <li>
                             <Link
-                                to="/documentation"
+                                to="/api-reference"
                                 className="text-gray-800 hover:text-gray-600 flex items-center gap-2"
                             >
                                 <FontAwesomeIcon icon={faCodeBranch} />
