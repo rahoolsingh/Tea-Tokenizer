@@ -6,7 +6,9 @@ import {
     faCodeBranch,
     faBars,
     faTimes,
+    faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router";
 
 function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,23 +17,28 @@ function NavBar() {
         <div className="flex items-center justify-between p-4 bg-[#ffeeda]">
             <nav className="flex justify-between items-center container mx-auto w-full">
                 {/* Logo */}
-                <div className="flex flex-col items-center">
+                <Link to="/" className="flex flex-col items-center">
                     <img src={logo} alt="Logo" className="h-12" />
                     <p className="text-center text-xs font-bold text-amber-700">
                         A Toy Tool By Veer Rajpoot
                     </p>
-                </div>
+                </Link>
 
                 {/* Desktop Menu */}
                 <ul className="hidden md:flex gap-x-4">
                     <li>
-                        <a
-                            href="#"
-                            className="text-gray-800 hover:text-gray-600 flex items-center gap-2"
+                        <Link
+                            to="https://github.com/rahoolsingh/Tea-Tokenizer"
+                            target="_blank"
+                            className="text-gray-800 hover:text-gray-600 flex items-center gap-2 group"
                         >
                             <FontAwesomeIcon icon={faGithub} />
-                            GitHub
-                        </a>
+                            Source Code{" "}
+                            <FontAwesomeIcon
+                                icon={faExternalLinkAlt}
+                                className="text-[0.6em] mb-auto -ml-1 group-hover:text-amber-700"
+                            />
+                        </Link>
                     </li>
                     <li>
                         <a
