@@ -14,41 +14,41 @@ app.use(bodyParser.json());
 app.use(cors({ origin: process.env.CORS_ORIGIN }));
 
 // Rate limiting middleware: allow only 10 requests per minute per IP
-app.use(async (req, res, next) => {
-    const ip = req.ip;
-    const now = Date.now();
-    const windowMs = 60 * 1000; // 1 minute
+// app.use(async (req, res, next) => {
+//     const ip = req.ip;
+//     const now = Date.now();
+//     const windowMs = 60 * 1000; // 1 minute
 
-    let limiter = await RateLimiter.findOne({ ip });
+//     let limiter = await RateLimiter.findOne({ ip });
 
-    if (!limiter) {
-        limiter = new RateLimiter({
-            ip,
-            count: 1,
-            windowStart: now,
-        });
-        await limiter.save();
-        return next();
-    }
+//     if (!limiter) {
+//         limiter = new RateLimiter({
+//             ip,
+//             count: 1,
+//             windowStart: now,
+//         });
+//         await limiter.save();
+//         return next();
+//     }
 
-    if (now - limiter.windowStart > windowMs) {
-        limiter.count = 1;
-        limiter.windowStart = now;
-        await limiter.save();
-        return next();
-    }
+//     if (now - limiter.windowStart > windowMs) {
+//         limiter.count = 1;
+//         limiter.windowStart = now;
+//         await limiter.save();
+//         return next();
+//     }
 
-    if (limiter.count >= 10) {
-        return res
-            .status(429)
-            .json({ error: "Too many requests. Please try again later." });
-    }
+//     if (limiter.count >= 10) {
+//         return res
+//             .status(429)
+//             .json({ error: "Too many requests. Please try again later." });
+//     }
 
-    limiter.count += 1;
+//     limiter.count += 1;
 
-    await limiter.save();
-    next();
-});
+//     await limiter.save();
+//     next();
+// });
 
 const englishWords = wordlist["english"];
 
